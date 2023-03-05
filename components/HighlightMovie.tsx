@@ -25,7 +25,7 @@ export default function HighlightMovie({
       alt={title}
       width={images.logos[0].width}
       height={images.logos[0].height}
-      className="w-64"
+      className="w-72"
     />
   ) : (
     <h2 className="w-min text-4xl font-bold tracking-tight">{title}</h2>
@@ -36,6 +36,9 @@ export default function HighlightMovie({
       <div className="container mx-auto flex flex-col items-start gap-8">
         <Stars nb={vote_average / 2} />
         {logo}
+        <p className="w-72 text-sm font-medium tracking-wide text-neutral-200">
+          {tagline}
+        </p>
         <PlayButton title={title} />
       </div>
       <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-r before:from-neutral-900/90">

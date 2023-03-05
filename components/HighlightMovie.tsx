@@ -4,11 +4,12 @@ import { PlayIcon, StarIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 
 export default function HighlightMovie({
+  id,
   title,
   images,
   tagline,
   vote_average,
-}: Pick<Movie, 'title' | 'images' | 'tagline' | 'vote_average'>) {
+}: Pick<Movie, 'id' | 'title' | 'images' | 'tagline' | 'vote_average'>) {
   const background = images.backdrops[0].file_path ? (
     <Image
       src={images.backdrops[0].file_path}
@@ -26,6 +27,7 @@ export default function HighlightMovie({
       width={images.logos[0].width}
       height={images.logos[0].height}
       className="w-72"
+      priority={true}
     />
   ) : (
     <h2 className="w-min text-4xl font-bold tracking-tight">{title}</h2>
@@ -39,7 +41,7 @@ export default function HighlightMovie({
         <p className="w-72 text-sm font-medium tracking-wide text-neutral-200">
           {tagline}
         </p>
-        <PlayButton title={title} />
+        <PlayButton id={id} title={title} />
       </div>
       <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-neutral-900">
         {background}
@@ -53,24 +55,24 @@ function Stars({ nb }: { nb: number }) {
   const missingStars = 5 - normalizedNbStars;
 
   return (
-    <div className="flex shrink-0 items-center gap-2 rounded-full bg-neutral-800 px-2 py-1">
+    <div className="flex shrink-0 items-center gap-2 rounded-full bg-neutral-900 px-2 py-1 shadow-md">
       {[...Array(normalizedNbStars)].map((_, i) => (
         <StarIcon key={i} className="w-4 text-red-500" />
       ))}
       {[...Array(missingStars)].map((_, i) => (
-        <StarIcon key={i} className="w-4 text-neutral-700" />
+        <StarIcon key={i} className="w-4 text-neutral-800" />
       ))}
-      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-600">
+      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-700">
         {nb.toPrecision(3)} sur 5
       </span>
     </div>
   );
 }
 
-function PlayButton({ title }: Pick<Movie, 'title'>) {
+function PlayButton({ id, title }: Pick<Movie, 'id' | 'title'>) {
   return (
     <Link
-      href="/"
+      href={`/movies/${id}`}
       className="flex items-center gap-2 rounded-xl bg-neutral-200 py-2 pl-6 pr-8 font-bold text-neutral-900 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
       title={`Lancer ${title}`}
     >

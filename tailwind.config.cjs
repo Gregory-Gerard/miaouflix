@@ -11,6 +11,15 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
       },
+      aspectRatio: {
+        'poster': '1 / 1.5',
+      },
+      gridAutoColumns: {
+        'posters': '150px',
+      },
+      gridTemplateColumns: {
+        'posters': 'repeat(auto-fill, 150px)',
+      },
     },
   },
   plugins: [],

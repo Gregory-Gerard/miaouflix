@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Movie {
-  id         Int        @id @default(autoincrement())
-  tmdbId     Int
+  id         Int        @id
   title      String
+  m3u8       String?
   categories Category[]
 }
 

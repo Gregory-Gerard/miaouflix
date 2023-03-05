@@ -1,8 +1,6 @@
 import React from 'react';
 import { Inter } from '@next/font/google';
-import Image from 'next/image';
 import '@/app/globals.css';
-import logo from '@/public/miaouflix.png';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -19,20 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={inter.variable}>
       <body className="min-h-full bg-neutral-900 text-neutral-50">
-        <Navbar />
-
         <main>{children}</main>
       </body>
     </html>
-  );
-}
-
-function Navbar() {
-  return (
-    <nav className="fixed z-20 w-full bg-gradient-to-b from-neutral-900/70 py-4">
-      <div className="container mx-auto">
-        <Image src={logo} alt="Logo Miaouflix" className="w-32" />
-      </div>
-    </nav>
   );
 }

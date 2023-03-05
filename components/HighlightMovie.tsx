@@ -32,7 +32,7 @@ export default function HighlightMovie({
   );
 
   return (
-    <section className="relative flex h-[max(calc(100vh_-_200px),500px)] w-screen flex-col justify-center">
+    <section className="relative flex h-[700px] w-screen flex-col justify-center">
       <div className="container mx-auto flex flex-col items-start gap-8">
         <Stars nb={vote_average / 2} />
         {logo}
@@ -41,7 +41,7 @@ export default function HighlightMovie({
         </p>
         <PlayButton title={title} />
       </div>
-      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-r before:from-neutral-900/90">
+      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-transparent after:to-neutral-900">
         {background}
       </div>
     </section>

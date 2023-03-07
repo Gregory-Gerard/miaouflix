@@ -24,9 +24,9 @@ export default function HighlightMovie({
     <Image
       src={images.logos[0].file_path}
       alt={title}
-      width={images.logos[0].width}
-      height={images.logos[0].height}
-      className="w-72"
+      width={300}
+      height={80}
+      className="-order-1 object-contain"
       priority={true}
     />
   ) : (
@@ -34,11 +34,11 @@ export default function HighlightMovie({
   );
 
   return (
-    <section className="relative flex h-[700px] w-screen flex-col justify-center">
-      <div className="container mx-auto flex flex-col items-start gap-8">
+    <section className="relative flex h-[600px] w-screen flex-col justify-end pb-24 md:h-[700px] md:justify-center md:pb-0">
+      <div className="container flex flex-col items-center gap-8 text-center md:items-start md:text-left">
         <Stars nb={vote_average / 2} />
         {logo}
-        <p className="w-72 text-sm font-medium tracking-wide text-neutral-200">
+        <p className="hidden w-72 text-sm font-medium tracking-wide text-neutral-200 md:block">
           {tagline}
         </p>
         <PlayButton id={id} title={title} />

@@ -30,7 +30,7 @@ export default async function Page() {
       />
 
       <div className="-translate-y-16">
-        <div className="container mx-auto flex flex-col gap-4">
+        <div className="container flex flex-col gap-4">
           {categoriesWithMovies.map((categoryWithMovies) => (
             <MoviesRow
               key={categoryWithMovies.id}

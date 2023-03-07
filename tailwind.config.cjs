@@ -4,6 +4,10 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: ['./**/*.{ts,tsx}'],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+    },
     extend: {
       boxShadow: {
         outline: 'inset 0 0 0 1px hsl(0deg 0% 100% / 10%)',

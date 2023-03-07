@@ -36,7 +36,7 @@ export default function Navbar() {
         hasScrolled ? 'bg-neutral-800' : ''
       } transition-colors duration-500`}
     >
-      <div className="container mx-auto">
+      <div className="container">
         <Image src={logo} alt="Logo Miaouflix" className="w-32" />
       </div>
     </nav>

@@ -37,7 +37,8 @@ function MoviePoster({
       alt={`Poster de ${title}`}
       fill={true}
       className="object-cover"
-      sizes="10vw"
+      sizes="(max-width: 768px): 33vw,
+              10vw"
     />
   ) : (
     <div className="h-full w-full bg-neutral-800" />

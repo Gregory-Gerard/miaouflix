@@ -24,6 +24,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <Player
+      id={movie.id}
       src={movie.m3u8}
       title={movieWithTMDBData.title}
       poster={movieWithTMDBData.images.backdrops[0].file_path || ''}

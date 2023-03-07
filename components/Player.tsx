@@ -17,18 +17,22 @@ import {
   MediaPreviewTimeDisplay,
 } from 'media-chrome/dist/react';
 import HLS from 'hls.js';
-import { useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import { z } from 'zod';
 
 type PlayerProps = {
+  id: number;
   src: string;
   title: string;
   poster: string;
 };
 
-export default function Player({ src, title, poster }: PlayerProps) {
+export default function Player({ id, src, title, poster }: PlayerProps) {
   const videoPlayerRef = useRef<HTMLVideoElement>(null);
+  const loadPreviousTime = useLoadPreviousTime({ id, videoPlayerRef });
+  useSaveCurrentTime({ id, videoPlayerRef });
 
   useEffect(() => {
     const hlsInstance = new HLS();
@@ -56,6 +60,7 @@ export default function Player({ src, title, poster }: PlayerProps) {
         ref={videoPlayerRef}
         poster={poster}
         className="h-full w-full object-contain"
+        onLoadStart={loadPreviousTime}
       />
 
       <div
@@ -98,3 +103,70 @@ export default function Player({ src, title, poster }: PlayerProps) {
     </MediaController>
   );
 }
+
+const useSaveCurrentTime = ({
+  id,
+  videoPlayerRef,
+}: {
+  id: number;
+  videoPlayerRef: RefObject<HTMLVideoElement>;
+}) => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!videoPlayerRef.current) {
+        return;
+      }
+      const currentWatchedTimesByMovies = localStorage.getItem(
+        'currentWatchedTimesByMovies'
+      );
+
+      const currentWatchedTimesByMoviesParsed = currentWatchedTimesByMovies
+        ? z
+            .record(z.number())
+            .safeParse(JSON.parse(currentWatchedTimesByMovies))
+        : null;
+
+      localStorage.setItem(
+        'currentWatchedTimesByMovies',
+        JSON.stringify({
+          ...(currentWatchedTimesByMoviesParsed?.success
+            ? currentWatchedTimesByMoviesParsed.data
+            : {}),
+          [id.toString()]: videoPlayerRef.current.currentTime,
+        })
+      );
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [id, videoPlayerRef]);
+};
+
+const useLoadPreviousTime = ({
+  id,
+  videoPlayerRef,
+}: {
+  id: number;
+  videoPlayerRef: RefObject<HTMLVideoElement>;
+}) => {
+  return useCallback(() => {
+    if (!videoPlayerRef.current) {
+      return;
+    }
+
+    const currentWatchedTimesByMovies = localStorage.getItem(
+      'currentWatchedTimesByMovies'
+    );
+
+    const currentWatchedTimesByMoviesParsed = currentWatchedTimesByMovies
+      ? z.record(z.number()).safeParse(JSON.parse(currentWatchedTimesByMovies))
+      : null;
+
+    if (
+      currentWatchedTimesByMoviesParsed?.success &&
+      currentWatchedTimesByMoviesParsed.data[id.toString()]
+    ) {
+      videoPlayerRef.current.currentTime =
+        currentWatchedTimesByMoviesParsed.data[id.toString()];
+    }
+  }, [id, videoPlayerRef]);
+};

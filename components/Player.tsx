@@ -18,6 +18,8 @@ import {
 } from 'media-chrome/dist/react';
 import HLS from 'hls.js';
 import { useEffect, useRef } from 'react';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
 
 type PlayerProps = {
   src: string;
@@ -58,9 +60,15 @@ export default function Player({ src, title, poster }: PlayerProps) {
 
       <div
         slot="top-chrome"
-        className="flex w-full items-center justify-center bg-gradient-to-b from-black/90 pt-4 pb-10"
+        className="flex w-full items-center justify-between bg-gradient-to-b from-black/90 px-5 pt-4 pb-10"
       >
-        <h1 className="text-xl font-bold tracking-wider">{title}</h1>
+        <div className="h-8 w-8">
+          {/* fake div for pixel perfect centered title */}
+        </div>
+        <h1 className="text-sm font-bold tracking-wider md:text-xl">{title}</h1>
+        <Link href="/">
+          <XMarkIcon className="h-8 w-8" />
+        </Link>
       </div>
 
       <div slot="centered-chrome">

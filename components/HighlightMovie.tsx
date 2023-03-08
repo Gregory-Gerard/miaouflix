@@ -43,7 +43,7 @@ export default function HighlightMovie({
         </p>
         <PlayButton id={id} title={title} />
       </div>
-      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:hidden before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-neutral-900/40 after:to-neutral-900 md:before:block md:after:from-transparent">
+      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:hidden before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-neutral-900/60 after:to-neutral-900 md:before:block md:after:from-transparent md:after:to-neutral-900">
         {background}
       </div>
     </section>

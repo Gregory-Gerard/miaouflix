@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import logo from '@/public/miaouflix.png';
 import React, { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ClockIcon } from '@heroicons/react/20/solid';
 
 export default function Navbar() {
   const [hasScrolled, setHasScrolled] = useState<boolean>(false);
@@ -36,8 +38,15 @@ export default function Navbar() {
         hasScrolled ? 'bg-neutral-800' : ''
       } transition-colors duration-500`}
     >
-      <div className="container">
+      <div className="container flex items-center justify-between">
         <Image src={logo} alt="Logo Miaouflix" className="w-32" />
+        <Link
+          href={'/history'}
+          className="text-white/60 transition-colors hover:text-white"
+          title="Historique"
+        >
+          <ClockIcon className="h-6 w-6" />
+        </Link>
       </div>
     </nav>
   );

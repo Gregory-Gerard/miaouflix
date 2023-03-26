@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --dir . --ext .js,.mjs,.cjs,.jsx,.ts,.mts,.cts,.tsx",
-    "lint:fix": "next lint --dir . --ext .js,.mjs,.cjs,.jsx,.ts,.mts,.cts,.tsx --fix"
+    "lint": "next lint --dir .",
+    "lint:fix": "next lint --dir . --fix"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.16",

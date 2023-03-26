@@ -4,11 +4,7 @@ import { TMDB_IMAGE_BASE_URL } from '@/services/tmdb/common';
 const TMDBFilePath = z
   .string()
   .nullable()
-  .transform((val) =>
-    val
-      ? `${TMDB_IMAGE_BASE_URL}/original/${val.trim().replace(/^\/+/, '')}`
-      : val
-  );
+  .transform((val) => (val ? `${TMDB_IMAGE_BASE_URL}/original/${val.trim().replace(/^\/+/, '')}` : val));
 
 export const Movie = z.object({
   id: z.number(),

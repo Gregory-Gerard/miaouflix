@@ -40,11 +40,7 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between">
         <Image src={logo} alt="Logo Miaouflix" className="w-32" />
-        <Link
-          href={'/history'}
-          className="text-white/60 transition-colors hover:text-white"
-          title="Historique"
-        >
+        <Link href={'/history'} className="text-white/60 transition-colors hover:text-white" title="Historique">
           <ClockIcon className="h-6 w-6" />
         </Link>
       </div>

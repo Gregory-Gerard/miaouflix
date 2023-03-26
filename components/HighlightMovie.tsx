@@ -11,12 +11,7 @@ export default function HighlightMovie({
   vote_average,
 }: Pick<Movie, 'id' | 'title' | 'images' | 'tagline' | 'vote_average'>) {
   const background = images.backdrops[0].file_path ? (
-    <Image
-      src={images.backdrops[0].file_path}
-      alt={title}
-      fill={true}
-      className="-z-10 object-cover"
-    />
+    <Image src={images.backdrops[0].file_path} alt={title} fill={true} className="-z-10 object-cover" />
   ) : (
     <div className="h-full w-full bg-neutral-800"></div>
   );
@@ -38,9 +33,7 @@ export default function HighlightMovie({
       <div className="container flex flex-col items-center gap-8 text-center md:items-start md:text-left">
         <Stars nb={vote_average / 2} />
         {logo}
-        <p className="hidden w-72 text-sm font-medium tracking-wide text-neutral-200 md:block">
-          {tagline}
-        </p>
+        <p className="hidden w-72 text-sm font-medium tracking-wide text-neutral-200 md:block">{tagline}</p>
         <PlayButton id={id} title={title} />
       </div>
       <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:hidden before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-neutral-900/60 after:to-neutral-900 md:before:block md:after:from-transparent md:after:to-neutral-900">
@@ -62,9 +55,7 @@ function Stars({ nb }: { nb: number }) {
       {[...Array(missingStars)].map((_, i) => (
         <StarIcon key={i} className="w-4 text-neutral-800" />
       ))}
-      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-700">
-        {nb.toPrecision(3)} sur 5
-      </span>
+      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-700">{nb.toPrecision(3)} sur 5</span>
     </div>
   );
 }

@@ -16,13 +16,13 @@ module.exports = {
         sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
       },
       aspectRatio: {
-        'poster': '1 / 1.5',
+        poster: '1 / 1.5',
       },
       gridAutoColumns: {
-        'posters': '150px',
+        posters: '150px',
       },
       gridTemplateColumns: {
-        'posters': 'repeat(auto-fill, 150px)',
+        posters: 'repeat(auto-fill, 150px)',
       },
     },
   },

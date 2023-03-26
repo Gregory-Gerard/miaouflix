@@ -67,9 +67,7 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
         slot="top-chrome"
         className="flex w-full items-center justify-between bg-gradient-to-b from-black/90 px-5 pt-4 pb-10"
       >
-        <div className="h-8 w-8">
-          {/* fake div for pixel perfect centered title */}
-        </div>
+        <div className="h-8 w-8">{/* fake div for pixel perfect centered title */}</div>
         <h1 className="text-sm font-bold tracking-wider md:text-xl">{title}</h1>
         <Link href="/">
           <XMarkIcon className="h-8 w-8" />
@@ -104,34 +102,18 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
   );
 }
 
-const useSaveCurrentTime = ({
-  id,
-  videoPlayerRef,
-}: {
-  id: number;
-  videoPlayerRef: RefObject<HTMLVideoElement>;
-}) => {
+const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!videoPlayerRef.current) {
         return;
       }
-      const currentWatchedTimesByMovies = localStorage.getItem(
-        'currentWatchedTimesByMovies'
-      );
-
-      const currentWatchedTimesByMoviesParsed = currentWatchedTimesByMovies
-        ? z
-            .record(z.number())
-            .safeParse(JSON.parse(currentWatchedTimesByMovies))
-        : null;
+      const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
       localStorage.setItem(
         'currentWatchedTimesByMovies',
         JSON.stringify({
-          ...(currentWatchedTimesByMoviesParsed?.success
-            ? currentWatchedTimesByMoviesParsed.data
-            : {}),
+          ...currentWatchedTimesByMovies,
           [id.toString()]: videoPlayerRef.current.currentTime,
         })
       );
@@ -141,32 +123,22 @@ const useSaveCurrentTime = ({
   }, [id, videoPlayerRef]);
 };
 
-const useLoadPreviousTime = ({
-  id,
-  videoPlayerRef,
-}: {
-  id: number;
-  videoPlayerRef: RefObject<HTMLVideoElement>;
-}) => {
+const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
   return useCallback(() => {
     if (!videoPlayerRef.current) {
       return;
     }
 
-    const currentWatchedTimesByMovies = localStorage.getItem(
-      'currentWatchedTimesByMovies'
-    );
+    const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
-    const currentWatchedTimesByMoviesParsed = currentWatchedTimesByMovies
-      ? z.record(z.number()).safeParse(JSON.parse(currentWatchedTimesByMovies))
-      : null;
-
-    if (
-      currentWatchedTimesByMoviesParsed?.success &&
-      currentWatchedTimesByMoviesParsed.data[id.toString()]
-    ) {
-      videoPlayerRef.current.currentTime =
-        currentWatchedTimesByMoviesParsed.data[id.toString()];
-    }
+    videoPlayerRef.current.currentTime = currentWatchedTimesByMovies[id.toString()] || 0;
   }, [id, videoPlayerRef]);
+};
+
+const getCurrentWatchedTimesByMovies = (): Record<string, number> => {
+  const currentWatchedTimesByMovies = z
+    .record(z.number())
+    .safeParse(JSON.parse(localStorage.getItem('currentWatchedTimesByMovies') || ''));
+
+  return currentWatchedTimesByMovies.success ? currentWatchedTimesByMovies.data : {};
 };

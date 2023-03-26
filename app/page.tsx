@@ -69,7 +69,7 @@ async function retrieveCategoriesWithMovies(): Promise<(Category & { movies: Mov
     categoriesWithMoviesLoaded[i] = {
       id: categoriesWithMovies[i].id,
       title: categoriesWithMovies[i].title,
-      movies: await Promise.all(categoriesWithMovies[i].movies.map(async (movie) => await getMovie(movie.id))),
+      movies: await Promise.all(categoriesWithMovies[i].movies.map((movie) => getMovie(movie.id))),
     };
   }
 

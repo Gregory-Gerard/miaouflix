@@ -1,5 +1,6 @@
 import { url } from '@/services/tmdb/common';
 import { Movie } from '@/types/tmdb/movies';
+
 export const getMovie = (id: number): Promise<Movie> =>
   fetch(
     url(`/movie/${id}`, {
@@ -8,7 +9,7 @@ export const getMovie = (id: number): Promise<Movie> =>
     }),
     {
       next: {
-        revalidate: 43200,
+        revalidate: 43200, // 60 * 60 * 12
       },
     }
   )

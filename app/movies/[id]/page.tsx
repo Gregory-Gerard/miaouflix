@@ -40,3 +40,26 @@ export async function generateStaticParams() {
 
   return movies.map((movie) => ({ id: String(movie.id) }));
 }
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const { tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);
+
+  return {
+    title: tmdb.title,
+  };
+}
+
+async function retrieveMovieAndThrowIfNotFound(id: number) {
+  const movie = await prisma.movie.findUnique({ where: { id } });
+
+  // If movie don't have m3u8 then it's not published already
+  if (!movie || !movie.m3u8) {
+    notFound();
+  }
+
+  try {
+    return { movie, tmdb: await getMovie(movie.id) };
+  } catch (e) {
+    notFound();
+  }
+}

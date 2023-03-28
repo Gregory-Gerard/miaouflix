@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <section className="container pt-32">
+      <section className="container py-32">
         <WatchedMovies />
       </section>
     </>
@@ -61,7 +61,7 @@ function WatchedMovies() {
       {sortedWatchedMovies.length > 0 && !loading && (
         <div>
           <h1 className="mb-4 text-xl font-bold">Tes films favoris</h1>
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {sortedWatchedMovies.map((movie) => (
               <MovieCard key={movie.id} title={movie.title} images={movie.images} times={movie.times} />
             ))}
@@ -126,7 +126,7 @@ function MovieCard({ title, images, times }: Pick<Movie, 'title' | 'images'> & {
 
   return (
     <div className="relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl p-4 shadow-outline">
-      <strong>{title}</strong>
+      <strong className="truncate">{title}</strong>
       <small className="text-neutral-300">Vu {times} fois</small>
       <div className="absolute inset-0 -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-neutral-900">
         {background}

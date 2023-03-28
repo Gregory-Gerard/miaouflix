@@ -69,7 +69,7 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
         className="flex w-full items-center justify-between bg-gradient-to-b from-black/90 px-5 pt-4 pb-10"
       >
         <div className="h-8 w-8">{/* fake div for pixel perfect centered title */}</div>
-        <h1 className="text-sm font-bold tracking-wider md:text-xl">{title}</h1>
+        <h1 className="grow-0 truncate text-center text-sm font-bold tracking-wider md:text-xl">{title}</h1>
         <Link href="/">
           <XMarkIcon className="h-8 w-8" />
         </Link>

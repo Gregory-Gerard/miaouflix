@@ -55,7 +55,7 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
   }, [src, videoPlayerRef]);
 
   return (
-    <MediaController className="h-screen w-screen">
+    <MediaController className="h-screen w-screen" autohide={5}>
       <video
         slot="media"
         ref={videoPlayerRef}

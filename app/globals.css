@@ -84,7 +84,8 @@
 
   media-time-range {
     width: 100%;
-    height: 5px;
+    height: 25px;
+    margin: -10px 0;
     --media-range-track-transition: height 0.1s linear;
     --media-range-track-background: rgba(255, 255, 255, 0.2);
     --media-range-track-pointer-background: rgba(255, 255, 255, 0.5);

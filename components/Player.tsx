@@ -21,7 +21,7 @@ import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { z } from 'zod';
-import { addWatchedMovie } from '@/services/watched-movies';
+import { addWatchedMovie } from '@/services/watched-movie';
 
 type PlayerProps = {
   id: number;

@@ -20,7 +20,7 @@ export default function Page() {
 }
 
 const cache = new Map();
-export function fetchData(url: string): Promise<unknown> {
+function fetchData(url: string): Promise<unknown> {
   if (!cache.has(url)) {
     cache.set(
       url,

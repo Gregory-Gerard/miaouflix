@@ -11,7 +11,7 @@ export default function HighlightMovie({
   vote_average,
 }: Pick<Movie, 'id' | 'title' | 'images' | 'tagline' | 'vote_average'>) {
   const background = images.backdrops[0].file_path ? (
-    <Image src={images.backdrops[0].file_path} alt={title} fill={true} className="-z-10 object-cover" />
+    <Image src={images.backdrops[0].file_path} alt={title} fill={true} className="-z-10 object-cover" priority={true} />
   ) : (
     <div className="h-full w-full bg-neutral-800"></div>
   );
@@ -55,7 +55,9 @@ function Stars({ nb }: { nb: number }) {
       {[...Array(missingStars)].map((_, i) => (
         <StarIcon key={i} className="w-4 text-neutral-800" />
       ))}
-      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-700">{nb.toPrecision(3)} sur 5</span>
+      <span className="text-xs lining-nums tabular-nums leading-none text-neutral-700 contrast-more:text-neutral-300">
+        {nb.toPrecision(3)} sur 5
+      </span>
     </div>
   );
 }

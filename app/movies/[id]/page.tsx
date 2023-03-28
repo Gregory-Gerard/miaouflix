@@ -4,28 +4,7 @@ import prisma from '@/prisma/prisma';
 import { notFound } from 'next/navigation';
 import { getMovie } from '@/services/tmdb/movies';
 
-async function retrieveMovieAndThrowIfNotFound(id: number) {
-  const movie = await prisma.movie.findUnique({ where: { id } });
-
-  // If movie don't have m3u8 then it's not published already
-  if (!movie || !movie.m3u8) {
-    notFound();
-  }
-
-  try {
-    return { movie, tmdb: await getMovie(movie.id) };
-  } catch (e) {
-    notFound();
-  }
-}
-
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const { tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);
-
-  return {
-    title: tmdb.title,
-  };
-}
+export const revalidate = 43200; // 60 * 60 * 12
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { movie, tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);

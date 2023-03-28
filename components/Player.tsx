@@ -33,7 +33,7 @@ type PlayerProps = {
 export default function Player({ id, src, title, poster }: PlayerProps) {
   const videoPlayerRef = useRef<HTMLVideoElement>(null);
   const loadPreviousTime = useLoadPreviousTime({ id, videoPlayerRef });
-  useSaveCurrentTime({ id, videoPlayerRef });
+  const saveCurrentTime = useSaveCurrentTime({ id, videoPlayerRef });
 
   useEffect(() => {
     const hlsInstance = new HLS();
@@ -59,9 +59,11 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
       <video
         slot="media"
         ref={videoPlayerRef}
+        preload="metadata"
         poster={poster}
         className="h-full w-full object-contain"
-        onLoadStart={loadPreviousTime}
+        onLoadedMetadata={loadPreviousTime}
+        onTimeUpdate={saveCurrentTime}
       />
 
       <div
@@ -106,29 +108,25 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
 const LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY = 'currentWatchedTimesByMovies';
 
 const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!videoPlayerRef.current) {
-        return;
-      }
+  return useCallback(() => {
+    if (!videoPlayerRef.current) {
+      return;
+    }
 
-      const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
+    const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
-      localStorage.setItem(
-        LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY,
-        JSON.stringify({
-          ...currentWatchedTimesByMovies,
-          [id.toString()]: videoPlayerRef.current.currentTime,
-        })
-      );
+    localStorage.setItem(
+      LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY,
+      JSON.stringify({
+        ...currentWatchedTimesByMovies,
+        [id.toString()]: videoPlayerRef.current.currentTime,
+      })
+    );
 
-      // If user watch 1/10th of movie, we add it to watched movies list
-      if (videoPlayerRef.current.currentTime > videoPlayerRef.current.duration / 10) {
-        addWatchedMovie({ tmdbId: id, date: new Date() });
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
+    // If user watch 1/10th of movie, we add it to watched movies list
+    if (videoPlayerRef.current.currentTime > videoPlayerRef.current.duration / 10) {
+      addWatchedMovie({ tmdbId: id, date: new Date() });
+    }
   }, [id, videoPlayerRef]);
 };
 
@@ -140,7 +138,17 @@ const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRe
 
     const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
-    videoPlayerRef.current.currentTime = currentWatchedTimesByMovies[id.toString()] || 0;
+    // If user watch 90% of movie, do nothing
+    if ((currentWatchedTimesByMovies[id.toString()] / videoPlayerRef.current.duration) * 100 > 90) {
+      return;
+    }
+
+    // If user watch less than 5% of movie, do nothing
+    if ((currentWatchedTimesByMovies[id.toString()] / videoPlayerRef.current.duration) * 100 < 5) {
+      return;
+    }
+
+    videoPlayerRef.current.currentTime = currentWatchedTimesByMovies[id.toString()];
   }, [id, videoPlayerRef]);
 };
 

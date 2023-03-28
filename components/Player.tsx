@@ -21,6 +21,7 @@ import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
 import { z } from 'zod';
+import { addWatchedMovie } from '@/services/watched-movies';
 
 type PlayerProps = {
   id: number;
@@ -102,22 +103,30 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
   );
 }
 
+const LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY = 'currentWatchedTimesByMovies';
+
 const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (!videoPlayerRef.current) {
         return;
       }
+
       const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
       localStorage.setItem(
-        'currentWatchedTimesByMovies',
+        LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY,
         JSON.stringify({
           ...currentWatchedTimesByMovies,
           [id.toString()]: videoPlayerRef.current.currentTime,
         })
       );
-    }, 10000);
+
+      // If user watch 1/10th of movie, we add it to watched movies list
+      if (videoPlayerRef.current.currentTime > videoPlayerRef.current.duration / 10) {
+        addWatchedMovie({ tmdbId: id, date: new Date() });
+      }
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [id, videoPlayerRef]);
@@ -138,7 +147,7 @@ const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRe
 const getCurrentWatchedTimesByMovies = (): Record<string, number> => {
   const currentWatchedTimesByMovies = z
     .record(z.number())
-    .safeParse(JSON.parse(localStorage.getItem('currentWatchedTimesByMovies') || ''));
+    .safeParse(JSON.parse(localStorage.getItem(LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY) || '{}'));
 
   return currentWatchedTimesByMovies.success ? currentWatchedTimesByMovies.data : {};
 };

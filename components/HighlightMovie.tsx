@@ -36,7 +36,7 @@ export default function HighlightMovie({
         <p className="hidden w-72 text-sm font-medium tracking-wide text-neutral-200 md:block">{tagline}</p>
         <PlayButton id={id} title={title} />
       </div>
-      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:hidden before:bg-gradient-to-r before:from-neutral-900/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-neutral-900/60 after:to-neutral-900 md:before:block md:after:from-transparent md:after:to-neutral-900">
+      <div className="absolute -z-10 h-full w-full before:absolute before:inset-0 before:hidden before:bg-gradient-to-r before:from-neutral-950/90 after:absolute after:inset-0 after:bg-gradient-to-b after:from-neutral-950/60 after:to-neutral-950 md:before:block md:after:from-transparent md:after:to-neutral-950">
         {background}
       </div>
     </section>
@@ -48,7 +48,7 @@ function Stars({ nb }: { nb: number }) {
   const missingStars = 5 - normalizedNbStars;
 
   return (
-    <div className="flex shrink-0 items-center gap-2 rounded-full bg-neutral-900 px-2 py-1 shadow-md">
+    <div className="flex shrink-0 items-center gap-2 rounded-full bg-neutral-950 px-2 py-1 shadow-md">
       {[...Array(normalizedNbStars)].map((_, i) => (
         <StarIcon key={i} className="w-4 text-red-500" />
       ))}
@@ -66,7 +66,7 @@ function PlayButton({ id, title }: Pick<Movie, 'id' | 'title'>) {
   return (
     <Link
       href={`/movies/${id}`}
-      className="flex items-center gap-2 rounded-xl bg-neutral-200 py-2 pl-6 pr-8 font-bold text-neutral-900 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
+      className="flex items-center gap-2 rounded-xl bg-neutral-200 py-2 pl-6 pr-8 font-bold text-neutral-950 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
       title={`Lancer ${title}`}
     >
       <PlayIcon className="w-4" />

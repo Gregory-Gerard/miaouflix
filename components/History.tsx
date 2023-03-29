@@ -117,7 +117,7 @@ function MovieCard({ title, images, times }: Pick<Movie, 'title' | 'images'> & {
     <div className="relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl p-4 shadow-outline">
       <strong className="truncate">{title}</strong>
       <small className="text-neutral-300">Vu {times} fois</small>
-      <div className="absolute inset-0 -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-neutral-900">
+      <div className="absolute inset-0 -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-neutral-950">
         {background}
       </div>
     </div>
@@ -138,7 +138,7 @@ function EmptyState() {
       </div>
       <Link
         href="/"
-        className="rounded-xl bg-neutral-200 py-2 px-8 font-bold text-neutral-900 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
+        className="rounded-xl bg-neutral-200 px-8 py-2 font-bold text-neutral-950 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
       >
         Retourner vers l&apos;accueil
       </Link>

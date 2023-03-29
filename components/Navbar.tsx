@@ -34,8 +34,8 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed z-20 w-full bg-gradient-to-b from-neutral-900/70 py-4 ${
-        hasScrolled ? 'bg-neutral-800' : ''
+      className={`fixed z-20 w-full bg-gradient-to-b from-neutral-950/70 py-4 ${
+        hasScrolled ? 'bg-neutral-900' : ''
       } transition-colors duration-500`}
     >
       <div className="container flex items-center justify-between">

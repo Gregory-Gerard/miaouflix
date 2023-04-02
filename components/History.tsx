@@ -95,7 +95,7 @@ const useSortedWatchedMovies = (watchedMovies: Movie[], localWatchedMovies: Watc
           {} as Record<number, Movie & { times: number }>
         )
       ),
-    ].sort((a, b) => a.times - b.times);
+    ].sort((a, b) => b.times - a.times);
   }, [getMovieById, localWatchedMovies, watchedMovies.length]);
 };
 

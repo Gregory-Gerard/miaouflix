@@ -138,6 +138,10 @@ const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRe
 
     const currentWatchedTimesByMovies = getCurrentWatchedTimesByMovies();
 
+    if (!currentWatchedTimesByMovies[id.toString()]) {
+      return;
+    }
+
     // If user watch 90% of movie, do nothing
     if ((currentWatchedTimesByMovies[id.toString()] / videoPlayerRef.current.duration) * 100 > 90) {
       return;

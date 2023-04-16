@@ -24,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={inter.variable}>
-      <body className="min-h-full bg-neutral-950 text-neutral-50">
+      <body className="min-h-full overflow-x-hidden bg-neutral-950 text-neutral-50">
         <main>{children}</main>
       </body>
     </html>

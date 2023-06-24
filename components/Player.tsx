@@ -45,6 +45,14 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
       } else {
         videoPlayerRef.current.src = src;
       }
+
+      // Try to open video in fullscreen
+      const mediaControllerFullscreenBtn =
+        videoPlayerRef.current.parentElement?.querySelector('media-fullscreen-button');
+
+      if (mediaControllerFullscreenBtn instanceof HTMLElement) {
+        mediaControllerFullscreenBtn.click();
+      }
     }
 
     return () => {
@@ -52,7 +60,7 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
       hlsInstance.detachMedia();
       hlsInstance.destroy();
     };
-  }, [src, videoPlayerRef]);
+  }, [src]);
 
   return (
     <MediaController className="block h-screen w-screen" autohide={5}>

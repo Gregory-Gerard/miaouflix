@@ -21,4 +21,5 @@ model Category {
   id     Int     @id @default(autoincrement())
   title  String  @unique
   movies Movie[]
+  order  Int     @default(0)
 }

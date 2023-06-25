@@ -62,6 +62,9 @@ async function retrieveCategoriesWithMovies(): Promise<(Category & { movies: Mov
     include: {
       movies: true,
     },
+    orderBy: {
+      order: 'asc',
+    },
   });
   const categoriesWithMoviesLoaded: Awaited<ReturnType<typeof retrieveCategoriesWithMovies>> = [];
 
@@ -70,6 +73,7 @@ async function retrieveCategoriesWithMovies(): Promise<(Category & { movies: Mov
       id: categoriesWithMovies[i].id,
       title: categoriesWithMovies[i].title,
       movies: await Promise.all(categoriesWithMovies[i].movies.map((movie) => getMovie(movie.id))),
+      order: categoriesWithMovies[i].order,
     };
   }
 

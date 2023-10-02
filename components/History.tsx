@@ -13,7 +13,7 @@ function fetchData(url: string): Promise<unknown> {
   if (!cache.has(url)) {
     cache.set(
       url,
-      fetch(url).then((res) => res.json())
+      fetch(url).then((res) => res.json()),
     );
   }
 
@@ -74,7 +74,7 @@ const useSortedWatchedMovies = (watchedMovies: Movie[], localWatchedMovies: Watc
 
       return movie;
     },
-    [watchedMovies]
+    [watchedMovies],
   );
 
   return useMemo(() => {
@@ -92,8 +92,8 @@ const useSortedWatchedMovies = (watchedMovies: Movie[], localWatchedMovies: Watc
               times: (previousValue[currentValue.tmdbId]?.times || 0) + 1,
             },
           }),
-          {} as Record<number, Movie & { times: number }>
-        )
+          {} as Record<number, Movie & { times: number }>,
+        ),
       ),
     ].sort((a, b) => b.times - a.times);
   }, [getMovieById, localWatchedMovies, watchedMovies.length]);

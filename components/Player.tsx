@@ -145,7 +145,7 @@ const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef
       JSON.stringify({
         ...currentWatchedTimesByMovies,
         [id.toString()]: videoPlayerRef.current.currentTime,
-      })
+      }),
     );
 
     // If user watch 1/10th of movie, we add it to watched movies list

@@ -11,7 +11,7 @@ export const getMovie = (id: number): Promise<Movie> =>
       next: {
         revalidate: 43200, // 60 * 60 * 12
       },
-    }
+    },
   )
     .then((res) => res.json())
     .then((data) => Movie.parse(data));

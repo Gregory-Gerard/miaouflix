@@ -10,10 +10,12 @@ export const getWatchedMovies = (): WatchedMovie[] => {
   return watchedMovies.success ? watchedMovies.data : [];
 };
 
-export const addWatchedMovie = (watchedMovie: WatchedMovie): void => {
+export const addWatchedMovie = (watchedMovie: WatchedMovie, preventMultipleAddOnSameDay: boolean = true): void => {
   const watchedMovies = getWatchedMovies();
 
   if (
+    // should we prevent adding multiple times same movie on same day ?
+    preventMultipleAddOnSameDay &&
     // already watched this movie today ?
     watchedMovies.some(
       (movie) =>

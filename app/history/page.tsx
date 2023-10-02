@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar';
-import History from '@/components/History';
+import History from '@/components/History/History';
 
 export const metadata = {
   title: 'Historique',

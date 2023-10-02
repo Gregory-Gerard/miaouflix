@@ -36,7 +36,24 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
   const saveCurrentTime = useSaveCurrentTime({ id, videoPlayerRef });
 
   useEffect(() => {
-    const hlsInstance = new HLS();
+    const hlsInstance = new HLS({
+      fragLoadPolicy: {
+        default: {
+          maxTimeToFirstByteMs: 20000,
+          maxLoadTimeMs: 120000,
+          timeoutRetry: {
+            maxNumRetry: 4,
+            retryDelayMs: 0,
+            maxRetryDelayMs: 0,
+          },
+          errorRetry: {
+            maxNumRetry: 6,
+            retryDelayMs: 1000,
+            maxRetryDelayMs: 8000,
+          },
+        },
+      },
+    });
 
     if (videoPlayerRef.current) {
       if (HLS.isSupported()) {

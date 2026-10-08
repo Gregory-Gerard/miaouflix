@@ -2,8 +2,7 @@ import { getMovie } from '@/services/tmdb/movies';
 import prisma from '@/prisma/prisma';
 import { Movie } from '@/types/tmdb/movies';
 import HighlightMovie from '@/components/HighlightMovie';
-import MoviesRow from '@/components/MoviesRow';
-import { Category } from '@prisma/client';
+import MoviePoster from '@/components/MoviePoster';
 import Navbar from '@/components/Navbar';
 import Roulette from '@/components/Roulette';
 import React from 'react';
@@ -11,10 +10,7 @@ import React from 'react';
 export const revalidate = 43200; // 60 * 60 * 12
 
 export default async function Page() {
-  const [randomMovie, categoriesWithMovies] = await Promise.all([
-    retrieveOneRandomMovie(),
-    retrieveCategoriesWithMovies(),
-  ]);
+  const [randomMovie, movies] = await Promise.all([retrieveOneRandomMovie(), retrieveMovies()]);
 
   return (
     <div>
@@ -32,14 +28,20 @@ export default async function Page() {
 
       <div className="-translate-y-16">
         <div className="container flex flex-col gap-4">
-          <Roulette movies={retrieveUniqueMovies(categoriesWithMovies)} />
-          {categoriesWithMovies.map((categoryWithMovies) => (
-            <MoviesRow
-              key={categoryWithMovies.id}
-              title={categoryWithMovies.title}
-              movies={categoryWithMovies.movies}
-            />
-          ))}
+          <Roulette movies={movies} />
+          <section className="flex flex-col gap-4">
+            <h2 className="text-xl font-bold tracking-wide">Tous les films</h2>
+            <div className="grid grid-cols-posters justify-between gap-4">
+              {movies.map((movie) => (
+                <MoviePoster
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title}
+                  src={movie.images.posters[0]?.file_path}
+                />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -59,33 +61,8 @@ async function retrieveOneRandomMovie(): Promise<Movie> {
   return await getMovie(randomMovieTMDBId);
 }
 
-async function retrieveCategoriesWithMovies(): Promise<(Category & { movies: Movie[] })[]> {
-  const categoriesWithMovies = await prisma.category.findMany({
-    include: {
-      movies: true,
-    },
-    orderBy: {
-      order: 'asc',
-    },
-  });
-  const categoriesWithMoviesLoaded: Awaited<ReturnType<typeof retrieveCategoriesWithMovies>> = [];
+async function retrieveMovies(): Promise<Movie[]> {
+  const movies = await prisma.movie.findMany({ orderBy: { title: 'asc' } });
 
-  for (const i in categoriesWithMovies) {
-    categoriesWithMoviesLoaded[i] = {
-      id: categoriesWithMovies[i].id,
-      title: categoriesWithMovies[i].title,
-      movies: await Promise.all(categoriesWithMovies[i].movies.map((movie) => getMovie(movie.id))),
-      order: categoriesWithMovies[i].order,
-    };
-  }
-
-  return categoriesWithMoviesLoaded;
-}
-
-function retrieveUniqueMovies(categoriesWithMovies: { movies: Movie[] }[]): Movie[] {
-  const moviesById = new Map(
-    categoriesWithMovies.flatMap((category) => category.movies).map((movie) => [movie.id, movie]),
-  );
-
-  return [...moviesById.values()];
+  return Promise.all(movies.map((movie) => getMovie(movie.id)));
 }

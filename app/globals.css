@@ -19,8 +19,6 @@
 
   --aspect-poster: 1 / 1.5;
 
-  --grid-auto-columns-posters: 150px;
-
   --grid-template-columns-posters: repeat(auto-fill, 150px);
 
   --animate-fade-in: fade-in 300ms ease-out;

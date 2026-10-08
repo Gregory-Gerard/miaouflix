@@ -17,4 +17,8 @@ s3cmd sync $2 "s3://miaouflix/movies/$1/" --exclude='*' --include='movie7*.ts' -
 s3cmd sync $2 "s3://miaouflix/movies/$1/" --exclude='*' --include='movie8*.ts' --acl-public > /dev/null 2>&1 &
 s3cmd sync $2 "s3://miaouflix/movies/$1/" --exclude='*' --include='movie9*.ts' --acl-public > /dev/null 2>&1 &
 
-watch "ps -a | grep s3cmd"
+while [ -n "$(jobs -rp)" ]; do
+  printf '\r%s s3cmd sync running ' "$(jobs -rp | wc -l | tr -d ' ')"
+  sleep 5
+done
+echo

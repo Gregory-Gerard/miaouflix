@@ -40,3 +40,6 @@ next-env.d.ts
 # prisma
 *.db-journal
 prisma/.env
+
+# agents
+.claude/launch.json

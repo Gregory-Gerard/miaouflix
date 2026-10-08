@@ -6,7 +6,8 @@ import { getMovie } from '@/services/tmdb/movies';
 
 export const revalidate = 43200; // 60 * 60 * 12
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { movie, tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);
 
   return (
@@ -20,7 +21,8 @@ export async function generateStaticParams() {
   return movies.map((movie) => ({ id: String(movie.id) }));
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);
 
   return {

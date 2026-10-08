@@ -19,7 +19,7 @@ export default function MovieCard({ title, images, times }: Pick<Movie, 'title' 
     <div className="relative flex aspect-video flex-col justify-end overflow-hidden rounded-2xl p-4 shadow-outline">
       <strong className="truncate">{title}</strong>
       <small className="text-neutral-300">Vu {times} fois</small>
-      <div className="absolute inset-0 -z-10 h-full w-full before:absolute before:inset-0 before:bg-gradient-to-b before:from-transparent before:to-neutral-950">
+      <div className="absolute inset-0 -z-10 h-full w-full before:absolute before:inset-0 before:bg-linear-to-b before:from-transparent before:to-neutral-950">
         {background}
       </div>
     </div>

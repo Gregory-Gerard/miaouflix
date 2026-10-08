@@ -18,7 +18,6 @@ export const metadata = {
     index: false,
     follow: false,
   },
-  colorScheme: 'dark',
   generator: 'Next.js',
 };
 
@@ -38,3 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+
+export const viewport = {
+  colorScheme: 'dark',
+};

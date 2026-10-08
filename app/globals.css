@@ -1,6 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+
+@source '../**/*.{ts,tsx}';
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@theme {
+  --shadow-outline: inset 0 0 0 1px hsl(0deg 0% 100% / 10%);
+
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+
+  --aspect-poster: 1 / 1.5;
+
+  --grid-auto-columns-posters: 150px;
+
+  --grid-template-columns-posters: repeat(auto-fill, 150px);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility ytp-gradient-bottom {
+  padding-top: 37px;
+  position: absolute;
+  width: 100%;
+  height: 170px;
+  bottom: 0;
+  pointer-events: none;
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACqCAYAAABsziWkAAAAAXNSR0IArs4c6QAAAQVJREFUOE9lyNdHBQAAhfHb3nvvuu2997jNe29TJJEkkkgSSSSJJJJEEkkiifRH5jsP56Xz8PM5gcC/xfDEmjhKxEOCSaREEiSbFEqkQppJpzJMJiWyINvkUCIX8kw+JQqg0BRRxaaEEqVQZsopUQGVpooS1VBjglStqaNEPTSYRko0QbNpoUQrtJl2qsN0UqILuk0PJXqhz/RTYgAGzRA1bEYoMQpjZpwSExAyk5SYgmkzQ82aOUqEIWKilJiHBbNIiSVYhhVYhTVYhw3YhC3Yhh3YhT3YhwM4hCM4hhM4hTM4hwu4hCu4hhu4hTu4hwd4hCd4hhd4hTd4hw/4hC/4hh/4/QM2/id28uIEJAAAAABJRU5ErkJggg==');
+}
 
 @layer components {
   media-airplay-button[media-airplay-unavailable] {
@@ -110,13 +162,13 @@
   }
 
   media-preview-time-display {
-    background: theme(colors.neutral.900);
-    padding: theme(spacing.1) theme(spacing.4);
-    line-height: theme(lineHeight.normal);
-    margin-bottom: theme(spacing.2);
-    border-radius: theme(borderRadius.xl);
-    color: theme(colors.neutral.100);
-    box-shadow: theme(boxShadow.md);
+    background: var(--color-neutral-900);
+    padding: --spacing(1) --spacing(4);
+    line-height: var(--leading-normal);
+    margin-bottom: --spacing(2);
+    border-radius: var(--radius-xl);
+    color: var(--color-neutral-100);
+    box-shadow: var(--shadow-md);
   }
 
   media-mute-button + media-volume-range {
@@ -136,17 +188,5 @@
   media-volume-range:focus,
   media-volume-range:focus-within {
     width: 70px;
-  }
-
-  .ytp-gradient-bottom {
-    padding-top: 37px;
-    position: absolute;
-    width: 100%;
-    height: 170px;
-    bottom: 0;
-    pointer-events: none;
-    background-position: bottom;
-    background-repeat: repeat-x;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAACqCAYAAABsziWkAAAAAXNSR0IArs4c6QAAAQVJREFUOE9lyNdHBQAAhfHb3nvvuu2997jNe29TJJEkkkgSSSSJJJJEEkkiifRH5jsP56Xz8PM5gcC/xfDEmjhKxEOCSaREEiSbFEqkQppJpzJMJiWyINvkUCIX8kw+JQqg0BRRxaaEEqVQZsopUQGVpooS1VBjglStqaNEPTSYRko0QbNpoUQrtJl2qsN0UqILuk0PJXqhz/RTYgAGzRA1bEYoMQpjZpwSExAyk5SYgmkzQ82aOUqEIWKilJiHBbNIiSVYhhVYhTVYhw3YhC3Yhh3YhT3YhwM4hCM4hhM4hTM4hwu4hCu4hhu4hTu4hwd4hCd4hhd4hTd4hw/4hC/4hh/4/QM2/id28uIEJAAAAABJRU5ErkJggg==');
   }
 }

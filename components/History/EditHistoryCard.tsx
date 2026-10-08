@@ -19,9 +19,8 @@ export default function EditHistoryCard({ refetch }: { refetch: () => void }) {
   useEffect(() => {
     const watchedMovieIds = new Set(watchedMoviesFromLocalStorage.map((movie) => movie.tmdbId));
 
-    Movie.array()
-      .promise()
-      .parse(fetchData(`/api/history?tmdbIds=${JSON.stringify([...watchedMovieIds])}`))
+    fetchData(`/api/history?tmdbIds=${JSON.stringify([...watchedMovieIds])}`)
+      .then((data) => Movie.array().parse(data))
       .then((movies) => setWatchedMovies(movies));
   }, []);
 
@@ -112,7 +111,7 @@ export default function EditHistoryCard({ refetch }: { refetch: () => void }) {
           />
         </div>
 
-        <button className="mt-2 rounded-xl bg-neutral-200 px-8 py-2.5 font-bold text-neutral-950 shadow transition-all hover:bg-neutral-300 hover:shadow-xl focus:outline-0 focus:ring-2 focus:ring-red-700">
+        <button className="mt-2 cursor-pointer rounded-xl bg-neutral-200 px-8 py-2.5 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl focus:ring-2 focus:ring-red-700 focus:outline-0">
           Mettre à jour
         </button>
       </form>

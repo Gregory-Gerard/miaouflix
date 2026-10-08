@@ -34,20 +34,17 @@ export function useFetchWatchedMovies(): UseFetchWatchedMoviesReturnType {
 
   const fetchMoviesData = () => {
     const watchedMovieIds = new Set(watchedMoviesFromLocalStorage.map((movie) => movie.tmdbId));
+    const movies =
+      watchedMovieIds.size === 0
+        ? Promise.resolve([])
+        : fetchData(`/api/history?tmdbIds=${JSON.stringify([...watchedMovieIds])}`).then((data) =>
+            Movie.array().parse(data),
+          );
 
-    Movie.array()
-      .promise()
-      .parse(fetchData(`/api/history?tmdbIds=${JSON.stringify([...watchedMovieIds])}`))
-      .then((movies) => setMovies(movies))
-      .finally(() => setLoading(false));
+    movies.then((movies) => setMovies(movies)).finally(() => setLoading(false));
   };
 
   useEffect(() => {
-    if (watchedMoviesFromLocalStorage.length === 0) {
-      setLoading(false);
-      return;
-    }
-
     fetchMoviesData();
   }, []);
 

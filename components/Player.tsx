@@ -15,7 +15,7 @@ import {
   MediaSeekBackwardButton,
   MediaSeekForwardButton,
   MediaPreviewTimeDisplay,
-} from 'media-chrome/dist/react';
+} from 'media-chrome/react';
 import HLS from 'hls.js';
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { XMarkIcon } from '@heroicons/react/20/solid';
@@ -80,10 +80,11 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
   }, [src]);
 
   return (
-    <MediaController className="block h-screen w-screen" autohide={5}>
+    <MediaController className="block h-screen w-screen" autohide="5">
       <video
         slot="media"
         ref={videoPlayerRef}
+        tabIndex={-1}
         preload="metadata"
         poster={poster}
         className="h-full w-full object-contain"
@@ -93,7 +94,7 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
 
       <div
         slot="top-chrome"
-        className="flex w-full items-center justify-between bg-gradient-to-b from-black/90 px-5 pb-10 pt-4"
+        className="flex w-full items-center justify-between bg-linear-to-b from-black/90 px-5 pt-4 pb-10"
       >
         <div className="h-8 w-8">{/* fake div for pixel perfect centered title */}</div>
         <h1 className="grow-0 truncate text-center text-sm font-bold tracking-wider md:text-xl">{title}</h1>
@@ -132,7 +133,13 @@ export default function Player({ id, src, title, poster }: PlayerProps) {
 
 const LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY = 'currentWatchedTimesByMovies';
 
-const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
+const useSaveCurrentTime = ({
+  id,
+  videoPlayerRef,
+}: {
+  id: number;
+  videoPlayerRef: RefObject<HTMLVideoElement | null>;
+}) => {
   return useCallback(() => {
     if (!videoPlayerRef.current) {
       return;
@@ -155,7 +162,13 @@ const useSaveCurrentTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef
   }, [id, videoPlayerRef]);
 };
 
-const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRef: RefObject<HTMLVideoElement> }) => {
+const useLoadPreviousTime = ({
+  id,
+  videoPlayerRef,
+}: {
+  id: number;
+  videoPlayerRef: RefObject<HTMLVideoElement | null>;
+}) => {
   return useCallback(() => {
     if (!videoPlayerRef.current) {
       return;
@@ -183,7 +196,7 @@ const useLoadPreviousTime = ({ id, videoPlayerRef }: { id: number; videoPlayerRe
 
 const getCurrentWatchedTimesByMovies = (): Record<string, number> => {
   const currentWatchedTimesByMovies = z
-    .record(z.number())
+    .record(z.string(), z.number())
     .safeParse(JSON.parse(localStorage.getItem(LOCALSTORAGE_WATCHED_TIMES_BY_MOVIES_KEY) || '{}'));
 
   return currentWatchedTimesByMovies.success ? currentWatchedTimesByMovies.data : {};

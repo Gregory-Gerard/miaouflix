@@ -15,7 +15,7 @@ export default function EmptyState() {
       </div>
       <Link
         href="/"
-        className="rounded-xl bg-neutral-200 px-8 py-2 font-bold text-neutral-950 shadow transition-all hover:bg-neutral-300 hover:shadow-xl"
+        className="rounded-xl bg-neutral-200 px-8 py-2 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl"
       >
         Retourner vers l&apos;accueil
       </Link>

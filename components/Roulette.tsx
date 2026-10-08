@@ -79,7 +79,7 @@ export default function Roulette({ movies }: { movies: Movie[] }) {
                 <MoviePoster
                   id={movie.id}
                   title={movie.title}
-                  src={movie.images.posters[0].file_path}
+                  src={movie.images.posters[0]?.file_path}
                   loading="eager"
                 />
               </div>
@@ -99,7 +99,7 @@ export default function Roulette({ movies }: { movies: Movie[] }) {
               className="mt-4 flex animate-fade-in flex-wrap items-center gap-4 rounded-2xl bg-neutral-900 p-4 shadow-outline"
             >
               <div className="w-14 shrink-0">
-                <MoviePoster id={winner.id} title={winner.title} src={winner.images.posters[0].file_path} />
+                <MoviePoster id={winner.id} title={winner.title} src={winner.images.posters[0]?.file_path} />
               </div>
               <div className="min-w-0 grow basis-48">
                 <p className="text-xs font-bold tracking-widest text-red-500 uppercase">Ce soir tu regardes</p>

@@ -11,7 +11,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const { movie, tmdb } = await retrieveMovieAndThrowIfNotFound(+params.id);
 
   return (
-    <Player id={movie.id} src={movie.m3u8!} title={tmdb.title} poster={tmdb.images.backdrops[0].file_path || ''} />
+    <Player id={movie.id} src={movie.m3u8!} title={tmdb.title} poster={tmdb.images.backdrops[0]?.file_path || ''} />
   );
 }
 

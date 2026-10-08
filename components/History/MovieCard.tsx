@@ -2,9 +2,10 @@ import Image from 'next/image';
 import { Movie } from '@/types/tmdb/movies';
 
 export default function MovieCard({ title, images, times }: Pick<Movie, 'title' | 'images'> & { times: number }) {
-  const background = images.backdrops[0].file_path ? (
+  const backdrop = images.backdrops[0]?.file_path;
+  const background = backdrop ? (
     <Image
-      src={images.backdrops[0].file_path}
+      src={backdrop}
       alt={title}
       fill={true}
       className="-z-10 object-cover"

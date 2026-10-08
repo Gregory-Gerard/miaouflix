@@ -7,7 +7,7 @@ export default function MoviePoster({
   title,
   src,
   loading,
-}: Pick<Movie, 'id' | 'title'> & { src: string | null } & Pick<ImageProps, 'loading'>) {
+}: Pick<Movie, 'id' | 'title'> & { src?: string | null } & Pick<ImageProps, 'loading'>) {
   const poster = src ? (
     <Image
       src={src}

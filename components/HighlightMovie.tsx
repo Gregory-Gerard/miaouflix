@@ -11,20 +11,15 @@ export default function HighlightMovie({
   tagline,
   vote_average,
 }: Pick<Movie, 'id' | 'title' | 'images' | 'tagline' | 'vote_average'>) {
-  const background = images.backdrops[0].file_path ? (
-    <Image src={images.backdrops[0].file_path} alt={title} fill={true} className="-z-10 object-cover" priority={true} />
+  const backdrop = images.backdrops[0]?.file_path;
+  const logoPath = images.logos[0]?.file_path;
+  const background = backdrop ? (
+    <Image src={backdrop} alt={title} fill={true} className="-z-10 object-cover" priority={true} />
   ) : (
     <div className="h-full w-full bg-neutral-800"></div>
   );
-  const logo = images.logos[0].file_path ? (
-    <Image
-      src={images.logos[0].file_path}
-      alt={title}
-      width={300}
-      height={80}
-      className="-order-1 object-contain"
-      priority={true}
-    />
+  const logo = logoPath ? (
+    <Image src={logoPath} alt={title} width={300} height={80} className="-order-1 object-contain" priority={true} />
   ) : (
     <h2 className="w-min text-4xl font-bold tracking-tight">{title}</h2>
   );

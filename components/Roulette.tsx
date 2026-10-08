@@ -39,12 +39,12 @@ export default function Roulette({ movies }: { movies: Movie[] }) {
 
   return (
     <section className="flex flex-col gap-4">
-      <div className="flex items-end justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="text-xl font-bold tracking-wide">Roulette</h2>
           <p className="text-sm text-neutral-400">Pas envie de choisir ce soir ?</p>
         </div>
-        <Button variant="accent" onClick={spin} disabled={phase === 'spinning'} className="shrink-0">
+        <Button variant="accent" onClick={spin} disabled={phase === 'spinning'} className="sm:shrink-0">
           <ArrowPathIcon className={`w-4 ${phase === 'spinning' ? 'animate-spin' : ''}`} />
           {phase === 'done' ? 'Rejouer' : 'Lancer la roulette'}
         </Button>

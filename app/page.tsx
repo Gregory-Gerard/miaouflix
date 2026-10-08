@@ -5,6 +5,7 @@ import HighlightMovie from '@/components/HighlightMovie';
 import MoviesRow from '@/components/MoviesRow';
 import { Category } from '@prisma/client';
 import Navbar from '@/components/Navbar';
+import Roulette from '@/components/Roulette';
 import React from 'react';
 
 export const revalidate = 43200; // 60 * 60 * 12
@@ -31,6 +32,7 @@ export default async function Page() {
 
       <div className="-translate-y-16">
         <div className="container flex flex-col gap-4">
+          <Roulette movies={retrieveUniqueMovies(categoriesWithMovies)} />
           {categoriesWithMovies.map((categoryWithMovies) => (
             <MoviesRow
               key={categoryWithMovies.id}
@@ -78,4 +80,12 @@ async function retrieveCategoriesWithMovies(): Promise<(Category & { movies: Mov
   }
 
   return categoriesWithMoviesLoaded;
+}
+
+function retrieveUniqueMovies(categoriesWithMovies: { movies: Movie[] }[]): Movie[] {
+  const moviesById = new Map(
+    categoriesWithMovies.flatMap((category) => category.movies).map((movie) => [movie.id, movie]),
+  );
+
+  return [...moviesById.values()];
 }

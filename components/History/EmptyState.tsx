@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Button from '@/components/Button';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
 export default function EmptyState() {
@@ -13,12 +14,7 @@ export default function EmptyState() {
           Il est l&apos;heure d&apos;aller regarder un film et de remplir cette liste !
         </p>
       </div>
-      <Link
-        href="/"
-        className="rounded-xl bg-neutral-200 px-8 py-2 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl"
-      >
-        Retourner vers l&apos;accueil
-      </Link>
+      <Button render={<Link href="/" />}>Retourner vers l&apos;accueil</Button>
     </div>
   );
 }

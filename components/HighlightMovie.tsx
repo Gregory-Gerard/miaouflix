@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Movie } from '@/types/tmdb/movies';
 import { PlayIcon, StarIcon } from '@heroicons/react/20/solid';
 import Link from 'next/link';
+import Button from '@/components/Button';
 
 export default function HighlightMovie({
   id,
@@ -64,13 +65,9 @@ function Stars({ nb }: { nb: number }) {
 
 function PlayButton({ id, title }: Pick<Movie, 'id' | 'title'>) {
   return (
-    <Link
-      href={`/movies/${id}`}
-      className="flex items-center gap-2 rounded-xl bg-neutral-200 py-2 pr-8 pl-6 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl"
-      title={`Lancer ${title}`}
-    >
+    <Button render={<Link href={`/movies/${id}`} />} title={`Lancer ${title}`}>
       <PlayIcon className="w-4" />
       Lancer
-    </Link>
+    </Button>
   );
 }

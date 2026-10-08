@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Button from '@/components/Button';
 import MoviePoster from '@/components/MoviePoster';
 import { useState } from 'react';
 import { ArrowPathIcon, PlayIcon } from '@heroicons/react/20/solid';
@@ -43,14 +44,10 @@ export default function Roulette({ movies }: { movies: Movie[] }) {
           <h2 className="text-xl font-bold tracking-wide">Roulette</h2>
           <p className="text-sm text-neutral-400">Pas envie de choisir ce soir ?</p>
         </div>
-        <button
-          onClick={spin}
-          disabled={phase === 'spinning'}
-          className="flex shrink-0 cursor-pointer items-center gap-2 rounded-xl bg-red-600 px-6 py-2 font-bold shadow-sm transition-all hover:bg-red-500 hover:shadow-xl disabled:cursor-wait disabled:opacity-60"
-        >
+        <Button variant="accent" onClick={spin} disabled={phase === 'spinning'} className="shrink-0">
           <ArrowPathIcon className={`w-4 ${phase === 'spinning' ? 'animate-spin' : ''}`} />
           {phase === 'done' ? 'Rejouer' : 'Lancer la roulette'}
-        </button>
+        </Button>
       </div>
 
       <div className="relative overflow-hidden rounded-2xl bg-neutral-900 py-6 shadow-outline">
@@ -109,14 +106,14 @@ export default function Roulette({ movies }: { movies: Movie[] }) {
                 <strong className="line-clamp-2 text-lg leading-tight">{winner.title}</strong>
                 {winner.tagline && <p className="truncate text-sm text-neutral-400">{winner.tagline}</p>}
               </div>
-              <Link
-                href={`/movies/${winner.id}`}
+              <Button
+                render={<Link href={`/movies/${winner.id}`} />}
                 title={`Lancer ${winner.title}`}
-                className="flex grow items-center justify-center gap-2 rounded-xl bg-neutral-200 py-2 pr-8 pl-6 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl sm:grow-0"
+                className="grow sm:grow-0"
               >
                 <PlayIcon className="w-4" />
                 Lancer
-              </Link>
+              </Button>
             </div>
           )}
         </div>

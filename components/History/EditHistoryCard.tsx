@@ -3,6 +3,7 @@ import { addWatchedMovie, getWatchedMovies } from '@/services/watched-movie';
 import { fetchData } from '@/services/fetchData';
 import { Movie } from '@/types/tmdb/movies';
 import { WatchedMovie } from '@/types/watched-movie';
+import Button from '@/components/Button';
 
 // Load `localStorage` data only on client-side
 let watchedMoviesFromLocalStorage: WatchedMovie[] = [];
@@ -111,9 +112,7 @@ export default function EditHistoryCard({ refetch }: { refetch: () => void }) {
           />
         </div>
 
-        <button className="mt-2 cursor-pointer rounded-xl bg-neutral-200 px-8 py-2.5 font-bold text-neutral-950 shadow-sm transition-all hover:bg-neutral-300 hover:shadow-xl focus:ring-2 focus:ring-red-700 focus:outline-0">
-          Mettre à jour
-        </button>
+        <Button className="mt-2">Mettre à jour</Button>
       </form>
     </div>
   );

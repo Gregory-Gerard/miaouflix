@@ -2,5 +2,6 @@
   "singleQuote": true,
   "plugins": ["prettier-plugin-tailwindcss"],
   "printWidth": 120,
-  "tailwindStylesheet": "./app/globals.css"
+  "tailwindStylesheet": "./app/globals.css",
+  "tailwindFunctions": ["cva", "cn"]
 }
